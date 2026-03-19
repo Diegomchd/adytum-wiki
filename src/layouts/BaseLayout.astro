@@ -11,70 +11,48 @@ const { title = "DevWiki | ADS" } = Astro.props;
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 				<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code&display=swap" rel"stylesheet">
 				<style is:global>
-						:root {
-								--primary: #2563eb;
-								--bg:#f8fafc;
-								--card-bg: #ffffff;
-								--text-main: #1e293b;
-								--text-muted: #64748b;
-						}
+    :root {
+        /* Tema Claro (Padrão) */
+        --primary: #2563eb;
+        --bg: #ffffff;
+        --card-bg: #f8fafc;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+    }
 
-						body{
-							font-family: 'Inter', sans-serif;
-							background-color: var(--bg);
-							color: var(--text-main);
-							margin: 0;
-							padding: 0;
-							-webkit-font-smothing: antialiased;
-						}
+    /* Detecção Automática do Sistema */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+    }
 
-						.container {
-							max-width: 800px;
-							margin: 0 auto;
-							padding: 0 1.5rem;
-						}
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text-main);
+        margin: 0;
+        transition: background-color 0.3s ease;
+    }
 
-						header {
-							padding: 2rem 0;
-							display: flex;
-							justify-content: space-between;
-							align-items: center;
-							border-bottom: 1px solid #e2e8f0;
-							margin-bottom: 3rem;
-						}
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        border-radius: 12px;
+        transition: transform 0.2s, border-color 0.2s;
+    }
 
-						.logo{
-							font-weight: 800;
-							font-size: 1.5rem;
-							color: var(--primary);
-							letter-spacing: -0.025em;
-						}
-
-						nav a {
-							text-decoration: none;
-							color: var(--text-muted);
-							font-weight: 500;
-							transition: color 0.2s;
-						}
-
-						nav a:hover { color: var(--primary);}
-
-						/* Estilo do Artigo */
-			article h1 { font-size: 2.5rem; letter-spacing: -0.05em; margin-bottom: 1rem; }
-			
-			/* Melhoria nos Blocos de Código */
-			pre {
-				background: #0f172a !important;
-				padding: 1.5rem;
-				border-radius: 12px;
-				border: 1px solid #334155;
-				font-family: 'Fira Code', monospace;
-				font-size: 0.9rem;
-				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-			}
-
-			code { font-family: 'Fira Code', monospace; background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.85em; }
-		</style>
+    .card:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+    }
+</style>
 	</head>
 	<body>
 		<div class="container">
