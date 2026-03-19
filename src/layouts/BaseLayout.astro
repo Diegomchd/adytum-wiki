@@ -1,0 +1,92 @@
+---
+const { title = "DevWiki | ADS" } = Astro.props;
+---
+
+<html lang="pt-br">
+		<head>
+				<meta charset="utf-8" />
+				<meta name="viewport" content="width=device-width" />
+				<title>{title}</title>
+				<link rel="preconnect" href="https://fonts.googleapis.com">
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+				<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code&display=swap" rel"stylesheet">
+				<style is:global>
+						:root {
+								--primary: #2563eb;
+								--bg:#f8fafc;
+								--card-bg: #ffffff;
+								--text-main: #1e293b;
+								--text-muted: #64748b;
+						}
+
+						body{
+							font-family: 'Inter', sans-serif;
+							background-color: var(--bg);
+							color: var(--text-main);
+							margin: 0;
+							padding: 0;
+							-webkit-font-smothing: antialiased;
+						}
+
+						.container {
+							max-width: 800px;
+							margin: 0 auto;
+							padding: 0 1.5rem;
+						}
+
+						header {
+							padding: 2rem 0;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							border-bottom: 1px solid #e2e8f0;
+							margin-bottom: 3rem;
+						}
+
+						.logo{
+							font-weight: 800;
+							font-size: 1.5rem;
+							color: var(--primary);
+							letter-spacing: -0.025em;
+						}
+
+						nav a {
+							text-decoration: none;
+							color: var(--text-muted);
+							font-weight: 500;
+							transition: color 0.2s;
+						}
+
+						nav a:hover { color: var(--primary);}
+
+						/* Estilo do Artigo */
+			article h1 { font-size: 2.5rem; letter-spacing: -0.05em; margin-bottom: 1rem; }
+			
+			/* Melhoria nos Blocos de Código */
+			pre {
+				background: #0f172a !important;
+				padding: 1.5rem;
+				border-radius: 12px;
+				border: 1px solid #334155;
+				font-family: 'Fira Code', monospace;
+				font-size: 0.9rem;
+				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+			}
+
+			code { font-family: 'Fira Code', monospace; background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.85em; }
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<div class="logo">ADYTUM_WIKI</div>
+				<nav>
+					<a href="/">Home</a>
+				</nav>
+			</header>
+			<main>
+				<slot />
+			</main>
+		</div>
+	</body>
+</html>

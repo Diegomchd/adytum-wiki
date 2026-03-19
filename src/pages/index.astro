@@ -1,17 +1,30 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro'; // Ajustamos o caminho aqui
 
+const posts = await getCollection('artigos');
+const postsOrdenados = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Meu Wiki de Estudos - ADS">
+	<section style="margin-bottom: 3rem; text-align: center;">
+		<h1> Repositório de Conhecimento Pessoal </h1>
+		<p>Organizando artigos, tutoriais e anotações de ADS.</p>
+	</section>
+
+	<section>
+		<h3 style="border-left: 4px solid #0984e3; padding-left: 10px;">Artigos Recentes</h3>
+		<div style="display: grid; gap: 20px; margin-top: 1.5rem;">
+			{postsOrdenados.map(post => (
+				<a href={`/artigos/${post.id}`} style="text-decoration: none; color: inherit;">
+					<div style="padding: 1.5rem; border: 1px solid #eee; border-radius: 12px; transition: 0.3s; background: #fff;">
+						<h2 style="margin: 0 0 10px 0; font-size: 1.3rem; color: #0984e3;">{post.data.title}</h2>
+						<p style="margin: 0; color: #636e72;">{post.data.description}</p>
+						<small style="color: #b2bec3;">{post.data.pubDate.toLocaleDateString('pt-BR')}</small>
+					</div>
+				</a>
+			))}
+		</div>
+	</section>
+</BaseLayout>
+</BaseLayout>
