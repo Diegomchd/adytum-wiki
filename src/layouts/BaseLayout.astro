@@ -1,70 +1,97 @@
 ---
-const { title = "DevWiki | ADS" } = Astro.props;
+import { ClientRouter } from 'astro:transitions';
+const { title = "DevLog // System Override" } = Astro.props;
 ---
 
 <html lang="pt-br">
-		<head>
-				<meta charset="utf-8" />
-				<meta name="viewport" content="width=device-width" />
-				<title>{title}</title>
-				<link rel="preconnect" href="https://fonts.googleapis.com">
-				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-				<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code&display=swap" rel"stylesheet">
-				<style is:global>
-    :root {
-        /* Tema Claro (Padrão) */
-        --primary: #2563eb;
-        --bg: #ffffff;
-        --card-bg: #f8fafc;
-        --text-main: #1e293b;
-        --text-muted: #64748b;
-        --border: #e2e8f0;
-    }
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
+		
+		<meta name="description" content="Documentação técnica de engenharia de software e automação." />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    /* Detecção Automática do Sistema */
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border: #334155;
-        }
-    }
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+		
+		<ClientRouter />
+		
+		<style is:global>
+			:root { 
+				--bg: #f8fafc; --fg: #0f172a; --muted: #475569; 
+				--accent: #2563eb; --border: #cbd5e1; --card: #ffffff; 
+			}
+			:root.dark { 
+				--bg: #030712; --fg: #f3f4f6; --muted: #9ca3af; 
+				--accent: #3b82f6; --border: #1f2937; --card: #111827; 
+			}
 
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg);
-        color: var(--text-main);
-        margin: 0;
-        transition: background-color 0.3s ease;
-    }
+			body { 
+				font-family: 'Inter', sans-serif; background: var(--bg); 
+				color: var(--fg); margin: 0; padding-bottom: 4rem;
+			}
+			
+			.container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+			
+			header { 
+				display: flex; justify-content: space-between; align-items: center; 
+				padding: 2.5rem 0; border-bottom: 1px solid var(--border); margin-bottom: 4rem; 
+			}
+			
+			.logo { font-weight: 800; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; }
+			
+			nav { display: flex; gap: 1.5rem; align-items: center; }
+			nav a { 
+				font-size: 0.8rem; font-weight: 600; text-decoration: none; 
+				color: var(--fg); font-family: 'Fira Code', monospace; transition: 0.2s; 
+			}
+			nav a:hover, nav a.active { color: var(--accent); opacity: 1; }
 
-    .card {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        padding: 1.5rem;
-        border-radius: 12px;
-        transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .card:hover {
-        border-color: var(--primary);
-        transform: translateY(-2px);
-    }
-</style>
+			#theme-toggle { 
+				background: transparent; border: 1px solid var(--border); 
+				color: var(--fg); cursor: pointer; padding: 6px 12px; 
+				border-radius: 4px; font-family: 'Fira Code', monospace; 
+				font-size: 0.75rem; transition: 0.2s; 
+			}
+			#theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+		</style>
 	</head>
 	<body>
 		<div class="container">
 			<header>
-				<div class="logo">ADYTUM_WIKI</div>
+				<div class="logo">DevLog <span style="color:var(--accent)">//</span> Diego</div>
 				<nav>
-					<a href="/">Home</a>
+					<a href="/">DOCS</a>
+					<a href="/sobre">SOBRE</a>
+					<button id="theme-toggle">MODE</button>
 				</nav>
 			</header>
 			<main>
 				<slot />
 			</main>
 		</div>
+
+		<script is:inline>
+			const applyTheme = () => {
+				const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+				if (theme === 'dark') {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+			};
+
+			applyTheme();
+			document.addEventListener('astro:after-swap', applyTheme);
+
+			document.addEventListener('click', (e) => {
+				if (e.target.id === 'theme-toggle') {
+					const isDark = document.documentElement.classList.toggle("dark");
+					localStorage.setItem("theme", isDark ? "dark" : "light");
+				}
+			});
+		</script>
 	</body>
 </html>

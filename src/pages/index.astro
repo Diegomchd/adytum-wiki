@@ -3,37 +3,52 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const posts = await getCollection('artigos');
-
-// Lógica de ADS: Agrupando posts por categoria (nome da pasta)
 const categorias = posts.reduce((acc, post) => {
-    const categoria = post.id.includes('/') ? post.id.split('/')[0] : 'Geral';
-    if (!acc[categoria]) acc[categoria] = [];
-    acc[categoria].push(post);
+    const cat = post.id.includes('/') ? post.id.split('/')[0] : 'Geral';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(post);
     return acc;
 }, {});
 ---
 
-<BaseLayout title="Adytum Wiki | Repositório de Conhecimento">
-    <section style="margin-bottom: 4rem;">
-        <h1 style="font-size: 3rem; letter-spacing: -0.05em;">Santuário de Conhecimento <span style="color: var(--primary);">Adytum</span></h1>
-        <p style="color: var(--text-muted); font-size: 1.2rem;">Documentando a jornada em ADS e automação.</p>
-    </section>
+<BaseLayout title="DevLog // Home">
+	<section style="margin-bottom: 5rem;">
+		<h1 style="font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em; margin: 0 0 1rem 0;">Knowledge Base</h1>
+		<p style="color: var(--muted); font-size: 1.15rem; max-width: 600px; line-height: 1.6;">Repositório técnico de engenharia de software e automação.</p>
+		
+		<input type="text" id="search" placeholder="Filtrar base de dados..." 
+			style="margin-top: 2rem; width: 100%; max-width: 450px; padding: 14px 16px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); color: var(--fg); font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; transition: border 0.2s;" />
+	</section>
 
-    {Object.keys(categorias).map(cat => (
-        <div style="margin-bottom: 3rem;">
-            <h2 style="text-transform: capitalize; border-bottom: 2px solid var(--primary); display: inline-block; margin-bottom: 1.5rem;">
-                {cat}
-            </h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-                {categorias[cat].map(post => (
-                    <a href={`/artigos/${post.id}`} style="text-decoration: none; color: inherit;">
-                        <div class="card">
-                            <h3 style="margin: 0 0 10px 0; color: var(--primary);">{post.data.title}</h3>
-                            <p style="font-size: 0.9rem; color: var(--text-muted);">{post.data.description}</p>
-                        </div>
-                    </a>
-                ))}
-            </div>
-        </div>
-    ))}
+	{Object.keys(categorias).sort().map(cat => (
+		<div style="margin-bottom: 4rem;">
+			<h2 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 2rem;">
+				{cat}
+			</h2>
+			<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+				{categorias[cat].map(post => (
+					<a href={`/artigos/${post.id}`} class="post-card" style="text-decoration: none; color: inherit; display: block;">
+						<article style="background: var(--card); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px; transition: transform 0.2s, border-color 0.2s; height: 100%;">
+							<h3 style="margin: 0 0 0.75rem 0; font-size: 1.2rem; color: var(--accent);">{post.data.title}</h3>
+							<p style="margin: 0; font-size: 0.95rem; color: var(--muted); line-height: 1.6;">{post.data.description}</p>
+						</article>
+					</a>
+				))}
+			</div>
+		</div>
+	))}
 </BaseLayout>
+
+<script is:inline>
+	document.getElementById('search')?.addEventListener('input', (e) => {
+		const q = e.target.value.toLowerCase();
+		document.querySelectorAll('.post-card').forEach(card => {
+			const text = card.innerText.toLowerCase();
+			card.style.display = text.includes(q) ? 'block' : 'none';
+		});
+	});
+</script>
+
+<style>
+	.post-card article:hover { border-color: var(--accent); transform: translateY(-3px); }
+</style>

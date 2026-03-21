@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Sobre // DevLog">
+  <article style="max-width: 750px; line-height: 1.7;">
+    <header style="margin-bottom: 3.5rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem;">
+      <h1 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem;">
+        Diego // Software Engineering
+      </h1>
+      <p style="font-size: 1rem; color: var(--accent); font-family: 'Fira Code', monospace;">
+        > Análise e Desenvolvimento de Sistemas (ADS)
+      </p>
+    </header>
+    
+    <section style="margin-bottom: 4rem;">
+      <p style="font-size: 1.1rem; color: var(--fg);">
+        Desenvolvedor com foco na construção de sistemas eficientes e automação de fluxos de trabalho. Atualmente, dedico-me ao aprofundamento técnico em arquitetura de software e gestão de dados através da graduação na ULBRA.
+      </p>
+      <p style="font-size: 1.1rem; color: var(--fg); margin-top: 1.5rem;">
+        O <strong>DevLog</strong> funciona como um repositório técnico ativo, documentando implementações de APIs, scripts e padrões de projeto que utilizo no dia a dia.
+      </p>
+    </section>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-top: 3rem;">
+      <section>
+        <h2 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.5rem;">Core Stack</h2>
+        <ul style="list-style: none; padding: 0; font-family: 'Fira Code', monospace; font-size: 0.95rem; color: var(--fg);">
+          <li style="margin-bottom: 12px;">▹ Python / Backend Logic</li>
+          <li style="margin-bottom: 12px;">▹ JavaScript / TypeScript</li>
+          <li style="margin-bottom: 12px;">▹ SQL / Data Management</li>
+          <li style="margin-bottom: 12px;">▹ Astro / Web Framework</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.5rem;">Interesses de Pesquisa</h2>
+        <ul style="list-style: none; padding: 0; font-size: 1rem; color: var(--fg);">
+          <li style="margin-bottom: 12px;">• Automação de Processos (n8n)</li>
+          <li style="margin-bottom: 12px;">• Arquitetura RESTful</li>
+          <li style="margin-bottom: 12px;">• Estruturas de Dados</li>
+        </ul>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

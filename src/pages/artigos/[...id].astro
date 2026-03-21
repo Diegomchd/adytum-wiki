@@ -4,18 +4,36 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('artigos');
-  // O 'id' aqui tem que ser o mesmo nome do parâmetro no arquivo [...id].astro
-  return posts.map(post => ({
-    params: { id: post.id }, 
-    props: { post },
-  }));
+  return posts.map(post => ({ params: { id: post.id }, props: { post } }));
 }
-
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={post.data.title}>
-  <h1>{post.data.title}</h1>
-  <Content />
+<BaseLayout title={`${post.data.title} // DevLog`}>
+	<article style="max-width: 750px; margin: 0 auto;">
+		<header style="margin-bottom: 3rem;">
+			<div style="color: var(--muted); font-family: 'Fira Code', monospace; font-size: 0.8rem; margin-bottom: 1.5rem; text-transform: uppercase;">
+				<a href="/" style="color: var(--accent); text-decoration: none;">ROOT</a> / {post.id.split('/')[0]}
+			</div>
+			<h1 style="font-size: 2.8rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem;">{post.data.title}</h1>
+			<p style="font-size: 1.2rem; color: var(--muted); line-height: 1.5;">{post.data.description}</p>
+		</header>
+		
+		<div class="prose-content">
+			<Content />
+		</div>
+	</article>
 </BaseLayout>
+
+<style is:global>
+	.prose-content { line-height: 1.8; font-size: 1.1rem; color: var(--fg); }
+	.prose-content h2 { font-size: 1.7rem; margin-top: 3.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; font-weight: 700; letter-spacing: -0.02em; }
+	.prose-content h3 { font-size: 1.3rem; margin-top: 2.5rem; font-weight: 600; }
+	.prose-content p { margin-bottom: 1.5rem; }
+	.prose-content a { color: var(--accent); text-decoration: none; }
+	.prose-content a:hover { text-decoration: underline; }
+	.prose-content code:not(pre code) { background: var(--border); padding: 0.2em 0.4em; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.85em; }
+	.prose-content pre { padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); margin: 2rem 0; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.9rem; background-color: #0f172a !important; color: #f8fafc !important; }
+	.prose-content blockquote { border-left: 4px solid var(--accent); padding-left: 1.5rem; color: var(--muted); font-style: italic; margin: 2rem 0; background: var(--card); padding: 1rem 1rem 1rem 1.5rem; border-radius: 0 8px 8px 0; }
+</style>
